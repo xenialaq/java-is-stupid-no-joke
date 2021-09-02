@@ -1,16 +1,16 @@
 const twoSum = (nums, target) => {
-    const set = new Set();
+    const map = new Map();
     const ret = [];
-    nums.forEach(t => {
+    nums.forEach((t, i) => {
       if (ret.length > 0) {
         return;
       }
-      if (set.has(target - t)) {
-        ret.push(target - t);
-        ret.push(t);
+      if (map.has(target - t)) {
+        ret.push(i);
+        ret.push(map.get(target-t));
         return;
       }
-      set.add(t);
+      map.set(t, i);
     });
     return ret;
 };
