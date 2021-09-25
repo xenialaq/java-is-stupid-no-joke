@@ -33,13 +33,15 @@ const findLastLeq = (arr, l, r, val) => {
 var maxBoxesInWarehouse = function (boxes, warehouse) {
     // greedy
     // largest you can fit, right to left
-    const boxesSorted = boxes.sort((a, b) => (a - b));
     let wHMin = warehouse[0];
+    let wHMax = wHMin;
     const warehouseLim = warehouse.map((h) => {
         wHMin = Math.min(wHMin, h);
+        wHMax = Math.max(wHMax, h);
         return wHMin;
     });
-    const result = [];
+    const boxesSorted = boxes.filter(a => (a <= wHMax)).sort((a, b) => (a - b));
+    let result = 0;
     for (let j = warehouseLim.length - 1; j >= 0; j--) {
         wHMin = warehouseLim[j];
         // console.log('warehouse', wHMin);
@@ -48,7 +50,12 @@ var maxBoxesInWarehouse = function (boxes, warehouse) {
         }
         const biggestBox = boxesSorted[boxesSorted.length - 1];
         if (biggestBox <= wHMin) {
-            result.push(boxesSorted.pop());
+            result++;
+            boxesSorted.pop();
+            continue;
+        }
+        const smallestBox = boxesSorted[0];
+        if (smallestBox > wHMin) {
             continue;
         }
         // absolutely biggest box cannot fit
@@ -56,11 +63,10 @@ var maxBoxesInWarehouse = function (boxes, warehouse) {
         // console.log('findLastLeq', boxesSorted, wHMin, 'res:', lastLeq)
         if (lastLeq !== null) {
             // biggest box that fits is found
-            result.push(boxesSorted[lastLeq]);
+            result++;
             // console.log('box maxF', boxesSorted[lastLeq]);
             boxesSorted.splice(lastLeq, 1);
         }
     }
-    // console.log(result);
-    return result.length;
+    return result;
 };
