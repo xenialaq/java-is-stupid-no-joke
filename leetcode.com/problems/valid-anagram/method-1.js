@@ -10,15 +10,15 @@ var isAnagram = function(s, t) {
     const sMap = new Map();
     let i = 0;
     let cp;
-    while (s.codePointAt(i++) !== undefined) {
-        cp = s.codePointAt(i-1)
+    while (s.codePointAt(i) !== undefined) {
+        cp = s.codePointAt(i++)
         sMap.set(cp, sMap.has(cp) ? (sMap.get(cp) + 1) : 1);
     }
     const tMap = new Map();
     i = 0;
     cp = undefined;
-    while (t.codePointAt(i++) !== undefined) {
-        cp = t.codePointAt(i-1)
+    while (t.codePointAt(i) !== undefined) {
+        cp = t.codePointAt(i++)
         tMap.set(cp, tMap.has(cp) ? (tMap.get(cp) + 1) : 1);
     }
     if (sMap.size !== tMap.size) {
