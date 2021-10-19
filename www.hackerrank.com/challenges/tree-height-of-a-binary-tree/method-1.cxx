@@ -5,13 +5,13 @@ using namespace std;
 class Node {
   public:
     int data;
-  Node * left;
-  Node * right;
-  Node(int d) {
-    data = d;
-    left = NULL;
-    right = NULL;
-  }
+    Node * left;
+    Node * right;
+    Node(int d) {
+      data = d;
+      left = NULL;
+      right = NULL;
+    }
 };
 
 class Solution {
@@ -33,29 +33,21 @@ class Solution {
       }
     }
   
-  /*The tree node has data, left child and right child 
-    class Node {
-        int data;
-        Node* left;
-        Node* right;
-    };
-  */
-
-  int recursiveHeight(Node * node, int h) {
-    if (node == NULL) {
-      return h;
+    int recursiveHeight(Node * node, int h) {
+      if (node == NULL) {
+        return h;
+      }
+      return max(
+        recursiveHeight(node -> left, h + 1),
+        recursiveHeight(node -> right, h + 1)
+      );
     }
-    return max(
-      recursiveHeight(node -> left, h + 1),
-      recursiveHeight(node -> right, h + 1)
-    );
-  }
 
-  int height(Node * root) {
-    return max(
-      recursiveHeight(root -> left, 0),
-      recursiveHeight(root -> right, 0)
-    );
-  }
+    int height(Node * root) {
+      return max(
+        recursiveHeight(root -> left, 0),
+        recursiveHeight(root -> right, 0)
+      );
+    }
 
 };
